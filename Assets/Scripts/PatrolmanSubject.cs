@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PatrolmanSubject : MonoBehaviour
 {
+    public event Action OnPlayerDetected;
+    
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _detectionDistance;
@@ -51,6 +55,7 @@ public class PatrolmanSubject : MonoBehaviour
             if (hit.collider != null)
             {
                 Debug.Log("Player detected!");
+                OnPlayerDetected?.Invoke();
                 _isPlayerDetected = true;
                 break;
             }
