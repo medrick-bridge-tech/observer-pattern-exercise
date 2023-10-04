@@ -33,14 +33,8 @@ public class PatrolmanSubject : MonoBehaviour
         if (!_isPlayerDetected)
         {
             DetectPlayer();
+            Patrol();
         }
-        
-        if (Vector3.Distance(transform.position, _targetPosition) <= Mathf.Epsilon)
-        {
-            _targetPosition = GetRandomPosition();
-        }
-        
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _moveSpeed * Time.deltaTime);
     }
 
     private void DetectPlayer()
@@ -64,6 +58,16 @@ public class PatrolmanSubject : MonoBehaviour
                 Debug.DrawRay(transform.position, direction * _detectionDistance, Color.yellow);
             }
         }
+    }
+    
+    private void Patrol()
+    {
+        if (Vector3.Distance(transform.position, _targetPosition) <= Mathf.Epsilon)
+        {
+            _targetPosition = GetRandomPosition();
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _moveSpeed * Time.deltaTime);
     }
 
     private Vector3 GetRandomPosition()
