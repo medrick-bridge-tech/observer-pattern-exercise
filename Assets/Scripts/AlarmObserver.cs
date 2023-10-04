@@ -65,7 +65,7 @@ public class AlarmObserver : MonoBehaviour
 
         if (_blinkTimer <= 0f)
         {
-            _spriteRenderer.color = (_spriteRenderer.color == Color.green) ? Color.red : Color.green;
+            _spriteRenderer.color = (_spriteRenderer.color == Color.red) ? Color.blue : Color.red;
 
             _blinkTimer = BLINK_TIMER;
         }

@@ -79,7 +79,10 @@ public class PatrolmanSubject : MonoBehaviour
     
     private void RotateRandomly()
     {
-        float randomAngle = Random.Range(0f, 360f);
-        transform.rotation = Quaternion.Euler(0f, 0f, randomAngle);
+        if (!_isPlayerDetected)
+        {
+            float randomAngle = Random.Range(0f, 360f);
+            transform.rotation = Quaternion.Euler(0f, 0f, randomAngle);
+        }
     }
 }
