@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SoldierObserver : MonoBehaviour
 {
-    [SerializeField] private PatrolmanSubject _patrolmanSubject;
+    [SerializeField] private CCTVSubject _cctvSubject;
     [Space]
     [SerializeField] private float _moveSpeed;
 
@@ -15,17 +16,17 @@ public class SoldierObserver : MonoBehaviour
     
     private void OnEnable()
     {
-        if (_patrolmanSubject != null)
+        if (_cctvSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected += DetectPlayer;
+            _cctvSubject.OnPlayerDetected += DetectPlayer;
         }
     }
 
     private void OnDisable()
     {
-        if (_patrolmanSubject != null)
+        if (_cctvSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected -= DetectPlayer;
+            _cctvSubject.OnPlayerDetected -= DetectPlayer;
         }
     }
 

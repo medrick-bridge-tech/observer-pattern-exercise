@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AlarmObserver : MonoBehaviour
 {
-    [SerializeField] private PatrolmanSubject _patrolmanSubject;
+    [SerializeField] private CCTVSubject _cctvSubject;
     [Space]
     [SerializeField] private AudioSource _audioSource;
 
@@ -23,10 +24,10 @@ public class AlarmObserver : MonoBehaviour
     
     private void OnEnable()
     {
-        if (_patrolmanSubject != null)
+        if (_cctvSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected += _ => DetectPlayer();
-            _patrolmanSubject.OnPlayerDetected += _ => RaiseAlarm();
+            _cctvSubject.OnPlayerDetected += _ => DetectPlayer();
+            _cctvSubject.OnPlayerDetected += _ => RaiseAlarm();
         }
 
         if (_isPlayerDetected)
@@ -37,10 +38,10 @@ public class AlarmObserver : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_patrolmanSubject != null)
+        if (_cctvSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected -= _ => DetectPlayer();
-            _patrolmanSubject.OnPlayerDetected -= _ => RaiseAlarm();
+            _cctvSubject.OnPlayerDetected -= _ => DetectPlayer();
+            _cctvSubject.OnPlayerDetected -= _ => RaiseAlarm();
         }
         
         _audioSource.Pause();

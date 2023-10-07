@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SniperObserver : MonoBehaviour
 {
-    [SerializeField] private PatrolmanSubject _patrolmanSubject;
+    [SerializeField] private CCTVSubject _cctvSubject;
     [Space]
     [SerializeField] private Transform _gun;
     [SerializeField] private GameObject _bulletPrefab;
@@ -19,17 +20,17 @@ public class SniperObserver : MonoBehaviour
     
     private void OnEnable()
     {
-        if (_patrolmanSubject != null)
+        if (_cctvSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected += DetectPlayer;
+            _cctvSubject.OnPlayerDetected += DetectPlayer;
         }
     }
 
     private void OnDisable()
     {
-        if (_patrolmanSubject != null)
+        if (_cctvSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected -= DetectPlayer;
+            _cctvSubject.OnPlayerDetected -= DetectPlayer;
         }
     }
 

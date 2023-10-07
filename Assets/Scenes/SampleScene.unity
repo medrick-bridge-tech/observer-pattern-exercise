@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _patrolmanSubject: {fileID: 1557965174}
-  _player: {fileID: 459520109}
   _gun: {fileID: 1973660920}
   _bulletPrefab: {fileID: 5277542906780156513, guid: c8dffbe895b391345824655fb305b028, type: 3}
   _shootSound: {fileID: 8300000, guid: ef709e1fd6c6ac240ae93e0dc43de892, type: 3}
@@ -985,7 +984,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _patrolmanSubject: {fileID: 1557965174}
-  _player: {fileID: 459520109}
   _moveSpeed: 2
 --- !u!212 &773976957
 SpriteRenderer:
@@ -1113,7 +1111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Patrolman
+  m_text: CCTV
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1239,7 +1237,7 @@ GameObject:
   - component: {fileID: 1557965172}
   - component: {fileID: 1557965174}
   m_Layer: 0
-  m_Name: PatrolmanSubject
+  m_Name: CCTV_Subject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1328,10 +1326,10 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  _moveSpeed: 1
   _detectionDistance: 2
   _arcAngle: 60
-  _rayCount: 100
+  _rayCount: 60
+  _isPlayerDetected: 0
 --- !u!1 &1672543163
 GameObject:
   m_ObjectHideFlags: 0
