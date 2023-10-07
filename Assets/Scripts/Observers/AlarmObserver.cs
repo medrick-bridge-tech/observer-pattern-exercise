@@ -25,8 +25,8 @@ public class AlarmObserver : MonoBehaviour
     {
         if (_patrolmanSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected += DetectPlayer;
-            _patrolmanSubject.OnPlayerDetected += RaiseAlarm;
+            _patrolmanSubject.OnPlayerDetected += _ => DetectPlayer();
+            _patrolmanSubject.OnPlayerDetected += _ => RaiseAlarm();
         }
 
         if (_isPlayerDetected)
@@ -39,8 +39,8 @@ public class AlarmObserver : MonoBehaviour
     {
         if (_patrolmanSubject != null)
         {
-            _patrolmanSubject.OnPlayerDetected -= DetectPlayer;
-            _patrolmanSubject.OnPlayerDetected -= RaiseAlarm;
+            _patrolmanSubject.OnPlayerDetected -= _ => DetectPlayer();
+            _patrolmanSubject.OnPlayerDetected -= _ => RaiseAlarm();
         }
         
         _audioSource.Pause();

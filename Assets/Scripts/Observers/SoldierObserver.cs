@@ -7,9 +7,9 @@ public class SoldierObserver : MonoBehaviour
 {
     [SerializeField] private PatrolmanSubject _patrolmanSubject;
     [Space]
-    [SerializeField] private Transform _player;
     [SerializeField] private float _moveSpeed;
 
+    private Transform _player;
     private bool _isPlayerDetected;
     
     
@@ -42,8 +42,9 @@ public class SoldierObserver : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, _player.position, _moveSpeed * Time.deltaTime);
     }
 
-    private void DetectPlayer()
+    private void DetectPlayer(Transform player)
     {
         _isPlayerDetected = true;
+        _player = player;
     }
 }

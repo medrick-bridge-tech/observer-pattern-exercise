@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class PatrolmanSubject : MonoBehaviour
 {
-    public event Action OnPlayerDetected;
+    public event Action<Transform> OnPlayerDetected;
     
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private float _moveSpeed;
@@ -49,7 +49,7 @@ public class PatrolmanSubject : MonoBehaviour
             if (hit.collider != null)
             {
                 Debug.Log("Player detected!");
-                OnPlayerDetected?.Invoke();
+                OnPlayerDetected?.Invoke(hit.transform);
                 _isPlayerDetected = true;
                 break;
             }

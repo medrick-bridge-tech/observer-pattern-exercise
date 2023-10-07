@@ -7,12 +7,12 @@ public class SniperObserver : MonoBehaviour
 {
     [SerializeField] private PatrolmanSubject _patrolmanSubject;
     [Space]
-    [SerializeField] private Transform _player;
     [SerializeField] private Transform _gun;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private AudioClip _shootSound;
     [SerializeField] private float _shootingInterval;
 
+    private Transform _player;
     private float _lastShotTime;
     private bool _isPlayerDetected;
     
@@ -62,8 +62,9 @@ public class SniperObserver : MonoBehaviour
         }
     }
 
-    private void DetectPlayer()
+    private void DetectPlayer(Transform player)
     {
         _isPlayerDetected = true;
+        _player = player;
     }
 }
