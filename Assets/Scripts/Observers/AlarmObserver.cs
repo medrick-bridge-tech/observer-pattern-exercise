@@ -28,6 +28,8 @@ public class AlarmObserver : MonoBehaviour
         {
             _cctvSubject.OnPlayerDetected += _ => DetectPlayer();
             _cctvSubject.OnPlayerDetected += _ => RaiseAlarm();
+            
+            _cctvSubject.OnPlayerHidden += TurnAlarmOff;
         }
 
         if (_isPlayerDetected)
@@ -42,8 +44,10 @@ public class AlarmObserver : MonoBehaviour
         {
             _cctvSubject.OnPlayerDetected -= _ => DetectPlayer();
             _cctvSubject.OnPlayerDetected -= _ => RaiseAlarm();
+            
+            _cctvSubject.OnPlayerHidden -= TurnAlarmOff;
         }
-        
+
         _audioSource.Pause();
     }
     
@@ -75,5 +79,12 @@ public class AlarmObserver : MonoBehaviour
     private void DetectPlayer()
     {
         _isPlayerDetected = true;
+    }
+
+    private void TurnAlarmOff()
+    {
+        _isPlayerDetected = false;
+        _spriteRenderer.color = Color.green;
+        _audioSource.Stop();
     }
 }

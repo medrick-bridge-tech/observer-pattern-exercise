@@ -46,6 +46,7 @@ public class CCTVSubject : MonoBehaviour
             else if (!hit.collider && _isPlayerDetected && i == _rayCount -1)
             {
                 Debug.Log("Player hidden!");
+                OnPlayerHidden?.Invoke();
                 _isPlayerDetected = false;
                 return;
             }
