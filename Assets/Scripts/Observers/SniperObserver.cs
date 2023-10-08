@@ -12,17 +12,28 @@ public class SniperObserver : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private AudioClip _shootSound;
     [SerializeField] private float _shootingInterval;
+    
+    private const float AIM_AND_FIRE_DURATION_AFTER_PLAYER_LOST = 3f;
 
     private Transform _player;
     private float _lastShotTime;
     private bool _isPlayerDetected;
-    
-    
+    private float _aimAndFireTimer;
+    private Quaternion _initialRotation;
+
+
+    private void Start()
+    {
+        _initialRotation = transform.rotation;
+    }
+
     private void OnEnable()
     {
         if (_cctvSubject != null)
         {
             _cctvSubject.OnPlayerDetected += DetectPlayer;
+            
+            _cctvSubject.OnPlayerHidden += LosePlayer;
         }
     }
 
@@ -31,6 +42,8 @@ public class SniperObserver : MonoBehaviour
         if (_cctvSubject != null)
         {
             _cctvSubject.OnPlayerDetected -= DetectPlayer;
+            
+            _cctvSubject.OnPlayerHidden += LosePlayer;
         }
     }
 
@@ -40,6 +53,19 @@ public class SniperObserver : MonoBehaviour
         {
             AimGunAtPlayer();
             Fire();
+        }
+        else 
+        {
+            if (_aimAndFireTimer > 0f)
+            {
+                AimGunAtPlayer();
+                Fire();
+                _aimAndFireTimer -= Time.deltaTime;
+            }
+            else
+            {
+                ResetRotation();
+            }
         }
     }
     
@@ -63,9 +89,20 @@ public class SniperObserver : MonoBehaviour
         }
     }
 
+    private void ResetRotation()
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, _initialRotation, Time.deltaTime);
+    }
+
     private void DetectPlayer(Transform player)
     {
         _isPlayerDetected = true;
         _player = player;
+    }
+    
+    private void LosePlayer()
+    {
+        _isPlayerDetected = false;
+        _aimAndFireTimer = AIM_AND_FIRE_DURATION_AFTER_PLAYER_LOST;
     }
 }
