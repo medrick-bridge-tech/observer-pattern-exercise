@@ -11,10 +11,12 @@ public class AlarmObserver : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
 
     private const float BLINK_TIMER = 0.2f;
+    private const float ALARM_DURATION_AFTER_PLAYER_LOST = 3f;
     
     private SpriteRenderer _spriteRenderer;
     private bool _isPlayerDetected;
     private float _blinkTimer = BLINK_TIMER;
+    private float _alarmTimer;
 
 
     private void Start()
@@ -29,7 +31,7 @@ public class AlarmObserver : MonoBehaviour
             _cctvSubject.OnPlayerDetected += _ => DetectPlayer();
             _cctvSubject.OnPlayerDetected += _ => RaiseAlarm();
             
-            _cctvSubject.OnPlayerHidden += TurnAlarmOff;
+            _cctvSubject.OnPlayerHidden += LosePlayer;
         }
 
         if (_isPlayerDetected)
@@ -45,7 +47,7 @@ public class AlarmObserver : MonoBehaviour
             _cctvSubject.OnPlayerDetected -= _ => DetectPlayer();
             _cctvSubject.OnPlayerDetected -= _ => RaiseAlarm();
             
-            _cctvSubject.OnPlayerHidden -= TurnAlarmOff;
+            _cctvSubject.OnPlayerHidden -= LosePlayer;
         }
 
         _audioSource.Pause();
@@ -57,11 +59,26 @@ public class AlarmObserver : MonoBehaviour
         {
             BlinkAlarm();
         }
+        else
+        {
+            if (_alarmTimer > 0f)
+            {
+                BlinkAlarm();
+                _alarmTimer -= Time.deltaTime;
+            }
+            else
+            {
+                TurnOffAlarm();
+            }
+        }
     }
 
     private void RaiseAlarm()
     {
-        _audioSource.Play();
+        if (_alarmTimer <= 0f)
+        {
+            _audioSource.Play();
+        }
     }
     
     private void BlinkAlarm()
@@ -75,16 +92,21 @@ public class AlarmObserver : MonoBehaviour
             _blinkTimer = BLINK_TIMER;
         }
     }
+
+    private void TurnOffAlarm()
+    {
+        _spriteRenderer.color = Color.green;
+        _audioSource.Pause();
+    }
     
     private void DetectPlayer()
     {
         _isPlayerDetected = true;
     }
 
-    private void TurnAlarmOff()
+    private void LosePlayer()
     {
         _isPlayerDetected = false;
-        _spriteRenderer.color = Color.green;
-        _audioSource.Stop();
+        _alarmTimer = ALARM_DURATION_AFTER_PLAYER_LOST;
     }
 }
